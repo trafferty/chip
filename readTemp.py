@@ -42,7 +42,7 @@ if __name__ == "__main__":
                         help='interval between reads in sec', default=10)
     args = parser.parse_args()
 
-    dat_file = "%s/temperature_%s.dat" % (args.output_path, datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S"))
+    dat_file = "%s/temp_%s.dat" % (args.output_path, datetime.datetime.now().strftime("%Y%m%d_%H%M%S"))
 
     with open(dat_file, 'w') as temp_file:
        temp_file.write("timestamp, temp (C), temp (F)\n")
@@ -51,7 +51,7 @@ if __name__ == "__main__":
         temp_C = readDS18B20(args.sensor_id)
         if temp_C != None:
             ts = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            temp_F = temp_C * (9.0/5.0) + 32
+            temp_F = (temp_C * (9.0/5.0)) + 32.0
             print("%s: %f C (%f F)" % (ts, temp_C, temp_F))
 
             with open(dat_file, 'a') as temp_file:
